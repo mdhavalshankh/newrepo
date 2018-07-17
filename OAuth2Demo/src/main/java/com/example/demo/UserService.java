@@ -27,8 +27,12 @@ public class UserService implements UserDetailsService {
 		User user1 = new User();
 		user1.setUsername("Mahesh");
 		user1.setPassword("mahesh");
-		//user1.setEnabled(true);;
-		//repository.save(user1);
+		
+		user1.setRoles(Arrays.asList(new UserRole("ADMIN")));
+		
+		
+		CrmUserDetails crmUserDetails = new CrmUserDetails(user1);
+		repository.save(user1);
 	}
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

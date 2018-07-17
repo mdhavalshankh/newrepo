@@ -23,6 +23,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private ClientDetailsService clientDetailsService;
+	
+	@Autowired 
+	private CrmUserDetailsService crmUserDetailsService;
 		
 	@SuppressWarnings("deprecation")
 	@Bean
@@ -30,10 +33,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
 	}
 	
+	/*@Bean
+	public PasswordEncoder passwordEncoder() {
+	    return new BCryptPasswordEncoder();
+	}	*/
+	
 	@Autowired
 	public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication().withUser("Mahesh").password("mahesh").roles("ADMIN").and().withUser("Akshay")
-				.password("akshay").roles("USER");
+		auth
+		/*.inMemoryAuthentication()
+		.withUser("Mahesh").password("mahesh").roles("ADMIN")
+		.and()
+		.withUser("Akshay").password("akshay").roles("USER");*/
+		.userDetailsService(crmUserDetailsService)
+			.passwordEncoder(passwordEncoder());
+		
 	}
 
 	@Override

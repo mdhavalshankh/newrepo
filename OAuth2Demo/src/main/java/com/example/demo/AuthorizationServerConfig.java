@@ -23,6 +23,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
  
     @Autowired
     private UserApprovalHandler userApprovalHandler;
+    
+    @Autowired 
+	private CrmUserDetailsService crmUserDetailsService;
  
     @Autowired
     @Qualifier("authenticationManagerBean")
@@ -44,7 +47,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints.tokenStore(tokenStore).userApprovalHandler(userApprovalHandler)
-                .authenticationManager(authenticationManager);
+                .authenticationManager(authenticationManager)
+                .userDetailsService(crmUserDetailsService);
     }
  
     @Override
